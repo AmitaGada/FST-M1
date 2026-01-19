@@ -1,0 +1,19 @@
+--Write an SQL statement to find the total purchase amount of all orders.
+SELECT SUM (PURCHASE_AMOUNT) AS total_purchase_amount FROM ORDERS;
+
+--Write an SQL statement to find the average purchase amount of all orders.
+SELECT AVG (PURCHASE_AMOUNT) AS average_purchase_amount FROM ORDERS;
+
+--Write an SQL statement to get the maximum purchase amount of all the orders.
+SELECT MAX (PURCHASE_AMOUNT) AS MAXIMUM_purchase_amount FROM ORDERS;
+
+--Write an SQL statement to get the minimum purchase amount of all the orders.
+SELECT MIN (PURCHASE_AMOUNT) AS MINIMUM_purchase_amount FROM ORDERS;
+
+--Write an SQL statement to find the number of salesmen listed in the table.
+SELECT COUNT(DISTINCT SALESMAN_ID) AS COUNT FROM ORDERS;
+
+
+
+
+

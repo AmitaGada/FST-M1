@@ -1,0 +1,17 @@
+--Write an SQL statement to know which salesman are working for which customer.
+SELECT C.CUSTOMER_NAME, S.SALESMAN_NAME FROM CUSTOMERS C
+JOIN SALESMAN S ON C.SALESMAN_ID = S.SALESMAN_ID;
+
+--Write an SQL statement to make a list of customers in ascending order with a salesman that have a grade less than 300.
+SELECT C.CUSTOMER_NAME, S.SALESMAN_NAME, S.GRADE FROM CUSTOMERS C
+left outer JOIN SALESMAN S ON C.SALESMAN_ID = S.SALESMAN_ID WHERE S.GRADE < '300';
+
+
+--Write an SQL statement to find the list of customers who appointed a salesman who gets a commission of more than 12%.
+SELECT C.CUSTOMER_NAME, S.SALESMAN_NAME, S.COMMISSION FROM CUSTOMERS C
+JOIN SALESMAN S ON C.SALESMAN_ID = S.SALESMAN_ID WHERE S.COMMISSION > '12';
+
+--Write an SQL statement to find the following details of an order - order number, order date, purchase amount of order, which customer gives the order and which salesman works for that customer and commission rate they get for the order.
+SELECT a.order_no, a.order_date, a.purchase_amount, b.customer_name AS "Customer Name", b.grade, c.salesman_name AS "Salesman", c.commission FROM orders a 
+INNER JOIN customers b ON a.customer_id=b.customer_id 
+INNER JOIN salesman c ON a.salesman_id=c.salesman_id;
