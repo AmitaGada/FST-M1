@@ -1,10 +1,10 @@
-package Activity;
+package NewActivity;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.Color;
+import org.openqa.selenium.interactions.Actions;
 
 public class Activity4 {
 	
@@ -12,33 +12,34 @@ public class Activity4 {
 		
 		WebDriver driver = new FirefoxDriver();
 		
-		//Get the title of the page and print it to the console.
-		driver.get("https://training-support.net/webelements/target-practice");
+		Actions builder = new Actions(driver);
+		
+		driver.get("https://training-support.net/webelements/mouse-events");
 		System.out.println("Title of the page: " + driver.getTitle());
 		
-		//3rd header on the page and print it's text to the console
+		//find the elements
+		WebElement cargolock = driver.findElement(By.xpath("//h1[text()='Cargo.lock']"));
+		WebElement cargotoml = driver.findElement(By.xpath("//h1[text()='Cargo.toml']"));
+		WebElement src = driver.findElement(By.xpath("//h1[text()='src']"));
+		WebElement targetButton = driver.findElement(By.xpath("//h1[text()='target']"));
 		
-		String header3_message = driver.findElement(By.xpath("//h3[contains(text(), '#3')]")).getText();
-		System.out.println("Header 3 message is: "  + header3_message);
+		builder.click(cargolock).pause(1000).moveToElement(cargotoml).pause(500).click(cargotoml).build().perform();
 		
-		//5th header on the page and print it's color
-		Color header5_color = Color.fromString(driver.findElement(By.xpath("//h5[contains(text(), '#5')]")).getCssValue("color"));
-		System.out.println("Header5 color RGB: " + header5_color.asRgba());
-		System.out.println("Header5 color as hexcode: " + header5_color.asHex());
+		String actionMessage = driver.findElement(By.id("result")).getText();
 		
-		//purple button and print all it's classes
-		WebElement element = driver.findElement(By.xpath("//button[contains(text(), 'Pu')]"));
-		String att_value = element.getAttribute("Class");
-		System.out.println("Color of the button: " + att_value);
+		System.out.println("actionMessage");
 		
-		//slate button and print it's text.
-		WebElement element2 = driver.findElement(By.xpath("//button[contains(text(), 'Sl')]"));
-		String button_text = element2.getText();
-		System.out.println("text of Slate button: " + button_text);
 		
-		//Close the browser
-		driver.quit();
+		builder.doubleClick(src).pause(5000).contextClick(targetButton).pause(3000).build().perform();
 		
-	}
+		builder.click(driver.findElement(By.xpath("//div[@id='menu']/div/ul/li[1]"))).pause(5000).build().perform();
+        // Print the front side text
+        actionMessage = driver.findElement(By.id("result")).getText();
+        System.out.println(actionMessage);
 
+        // Close the browser
+        driver.quit();
+			
+	}
+	
 }

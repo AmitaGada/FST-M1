@@ -1,21 +1,32 @@
+# Import webdriver from selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
+# Start the Driver
 with webdriver.Firefox() as driver:
+    # Declare the wait variable
+    wait = WebDriverWait(driver, timeout=10)
+    # Navigate to the URL
+    driver.get("https://training-support.net/webelements/tables")
+    # Print the title of the page
+    print("Page title is: ", driver.title)
 
-    driver.get("https://training-support.net/webelements/dynamic-controls")
-    ##Get the title of the page and print it to the console
-    print("Title of the page: ", driver.title)
+    # Print the number of columns
+    cols = driver.find_elements(By.XPATH, "//table[contains(@class, 'table-auto')]/thead/tr/th")
+    print("Number of columns: ", len(cols))
+    # Print the number of rows
+    rows = driver.find_elements(By.XPATH, "//table[contains(@class, 'table-auto')]/tbody/tr")
+    print("Number of rows: ", len(rows))
 
-    ##Find the text field
-    textfield = driver.find_element(By.ID, "textInput")
-    ##Check if the text field is enabled and print it
-    print("is text field enable: ", textfield.is_enabled())
+    # Print the Book Name in the 5th row
+    cellValue = driver.find_element(By.XPATH, "//table[contains(@class, 'table-auto')]/tbody/tr[5]/td[2]")
+    print("Book name before sorting: ", cellValue.text)
 
-    ##Click the "Enable Input" button to enable the input field
-    driver.find_element(By.ID, "textInputButton").click()
-    ##Check if the text field is enabled again and print it
-    print("Is text field enabled: ", textfield.is_enabled())
+    # Sort the table
+    driver.find_element(By.XPATH, "//table[contains(@class, 'table-auto')]/thead/tr/th[5]").click()
 
-    ##Close the browser
-    driver.quit()
+    # Print the cell value of the second row and second column again
+    cellValue = driver.find_element(By.XPATH, "//table[contains(@class, 'table-auto')]/tbody/tr[5]/td[2]")
+    print("Book Name after sorting: ", cellValue.text)

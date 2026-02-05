@@ -1,4 +1,4 @@
-package Activity;
+package NewActivity;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,3 +23,4 @@ public class Activity1 {
 	}
 
 }
+

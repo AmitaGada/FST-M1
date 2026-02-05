@@ -14,5 +14,3 @@ with webdriver.Firefox() as driver:
     element = driver.find_element(By.CLASS_NAME, "svelte-1pdjkmx").click()
 
     print("Title of the new page: ", driver.title)
-
-

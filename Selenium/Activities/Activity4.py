@@ -1,30 +1,34 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.color import Color
+from selenium.webdriver import ActionChains
 
 with webdriver.Firefox() as driver:
-
-    driver.get("https://training-support.net/webelements/target-practice")
-    print("Title of the page: ", driver.title)
+    Actions = webdriver.ActionChains(driver)
     
-    ##3rd header on the page and print it's text to the console.
-    header3_message = driver.find_element(By.XPATH, "//h3[contains(text(), '#3')]").text
-    print("message on header3: ", header3_message)
+    driver.get("https://training-support.net/webelements/mouse-events")
+    ##Get the title of the page and print it to the console
+    print("Title of the page: ", driver.title)
 
-    ##5th header on the page and print it's color.
-    element = Color.from_string(driver.find_element(By.XPATH, "//h5[contains(text(), '#5')]").value_of_css_property("color"))
-    ##rgb_color = Color.from_string(element).value_of_CSS_property('color')
-    print("RGB color: ", element)
-    print("heading5 colour as Hexcode: ", element.hex)
-    ##hex_color = Color.from_string(element).hex
-    ##print("hex color is: ", hex_color)
+    ##Find the elements
+    cargolock = driver.find_element(By.XPATH, "//h1[text()='Cargo.lock']")
+    cargotoml = driver.find_element(By.XPATH, "//h1[text()='Cargo.toml']")
+    src = driver.find_element(By.XPATH, "//h1[text()='src']")
+    target = driver.find_element(By.XPATH, "//h1[text()='target']")
 
-    ##purple button and print all it's classes.
-    Att_value = driver.find_element(By.XPATH, "//button[contains(text(), 'Pu')]").get_attribute("Class")
-    print("Purple button Class attribute: ", Att_value)
-
-    ##slate button and print it's text.
-    button_text = driver.find_element(By.XPATH, "//button[contains(text(), 'Sl')]").text
-    print("text on Slate button: ", button_text)
-
+    ##Left click on the Cargo.lock button, move the cursor to the Cargo.toml button and then click it
+    Actions.click(cargolock).pause(1).move_to_element(cargotoml).pause(5).click(cargotoml).perform()
+    
+    ##Print the confirmation text
+    actionMessage = driver.find_element(By.ID, "result").text
+    print(actionMessage)
+    
+    ##Double click on the src button. Then right click on the target button and select open
+    Actions.double_click(src).pause(2).move_to_element(target).pause(5).context_click(target).perform()
+    Actions.click(driver.find_element(By.XPATH, ("//div[@id='menu']/div/ul/li[1]"))).pause(5).perform()
+    
+    ##Print the confirmation text
+    actionMessage=driver.find_element(By.ID, "result").text
+    print(actionMessage)
+    
+    ##Close the browser
     driver.quit()

@@ -1,26 +1,25 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
+
 
 with webdriver.Firefox() as driver:
+    actions = ActionChains(driver)
+    driver.get("https://training-support.net/webelements/drag-drop")
 
-    driver.get("https://training-support.net/webelements/dynamic-controls")
-    ## # Print the title of the page
     print("Title of the page: ", driver.title)
-    
-    ### Find the checkbox
-    checkbox = driver.find_element(By.ID, "checkbox")
-    ## Find the checkbox toggle button
-    toggle_checkbox = driver.find_element(By.XPATH, "//button[text()='Toggle Checkbox']")
-    
-    ### Verify if the checkbox is displayed or not
-    print("Checkbox is displayed: ", checkbox.is_displayed())
 
-    ##Click the checkbox_toggle button to hide checkbox
-    toggle_checkbox.click()
-    ##Verify again if the checkbox is displayed or not
-    print("Checkbox is visible: ", checkbox.is_displayed())
+    ##Findelements
+    FootBall = driver.find_element(By.ID, "ball")
+    DropZone1 = driver.find_element(By.ID, "dropzone1")
+    DropZone2 = driver.find_element(By.ID, "dropzone2")
+
+    actions.click_and_hold(FootBall).move_to_element(DropZone1).pause(5).release().perform()
+    if((DropZone1.find_element(By.CLASS_NAME, "dropzone-text")).text == "Dropped!"):
+        print("Ball was dropped in dropzone 1")
+
+    actions.drag_and_drop(FootBall, DropZone2).pause(5).perform()
+    if((DropZone2.find_element(By.CLASS_NAME, "dropzone-text")).text == "Dropped!"):
+        print("Ball was dropped in dropzone 2")
     
-    ##Close the browser
     driver.quit()
-
-

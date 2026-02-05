@@ -1,21 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 
 with webdriver.Firefox() as driver:
+    wait = WebDriverWait(driver, timeout=30)
+    driver.get("https://training-support.net/webelements/dynamic-content")
+    print("Title of the page is: ", driver.title)
 
-    driver.get("https://training-support.net/webelements/dynamic-controls")
-    ##Get the title of the page and print it to the console.
-    print("Title of the page: ", driver.title)
+    driver.find_element(By.ID, "genButton").click()
 
-    ##Find the checkbox input element.
-    checkbox = driver.find_element(By.ID, "checkbox")
-    ##Check if the checkbox is selected and print the result.
-    print("Is checkbox select: ", checkbox.is_selected())
-
-    ##Click the checkbox to select it.
-    driver.find_element(By.ID, "checkbox").click()
-    ##Check if the checkbox is selected again and print the result
-    print("Is checkbox selected: ", checkbox.is_selected())
-
-    ##Close the browser
-    driver.quit()
+    if wait.until(expected_conditions.text_to_be_present_in_element((By.ID, "word"), "release")):
+        print("Word found: ", driver.find_element(By.ID, "word").text)
